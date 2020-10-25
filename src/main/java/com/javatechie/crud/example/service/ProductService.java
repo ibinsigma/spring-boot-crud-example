@@ -1,6 +1,7 @@
 package com.javatechie.crud.example.service;
 
 import com.javatechie.crud.example.entity.Product;
+import com.javatechie.crud.example.repository.MyEntityRepository;
 import com.javatechie.crud.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository repository;
+    @Autowired
+    private MyEntityRepository repo;
+
 
     public Product saveProduct(Product product) {
         return repository.save(product);
@@ -43,6 +47,14 @@ public class ProductService {
         existingProduct.setQuantity(product.getQuantity());
         existingProduct.setPrice(product.getPrice());
         return repository.save(existingProduct);
+    }
+
+    public boolean existsByName(String name)
+    {
+        if(repo.existsByName(name))
+            return true;
+        else
+            return false;
     }
 
 
